@@ -1,4 +1,6 @@
-from tkinter import * #importing all the classes and methods of tkinter module
+# Importing necessary modules and classes from tkinter
+
+from tkinter import *
 import random
 import ttkthemes
 from tkinter import ttk
@@ -6,11 +8,15 @@ from time import sleep
 import threading
 
 
-###########Functionality Part
+# Functionality Part
+
+# Initial values for timer and statistics
 totaltime=60
 time=0
 wrongwords=0
 elapsedtimeinminutes=0
+
+# Function to start the typing test timer
 def start_timer():
     startButton.config(state=DISABLED)
     global time
@@ -27,6 +33,8 @@ def start_timer():
     textarea.config(state=DISABLED)
     resetButton.config(state=NORMAL)
 
+
+# Function to calculate typing statistics
 def count():
     global wrongwords
     while time!=totaltime:
@@ -51,7 +59,7 @@ def count():
     accuracy=round(accuracy)
     accuracy_percent_label.config(text=str(accuracy)+'%')
 
-
+# Function to start both timer and statistics calculation in separate threads
 def start():
     t1=threading.Thread(target=start_timer)
     t1.start()
@@ -59,7 +67,7 @@ def start():
     t2 = threading.Thread(target=count)
     t2.start()
 
-
+# Function to reset the typing test
 def reset():
     global time,elapsedtimeinminutes
     time=0
@@ -80,7 +88,9 @@ def reset():
 
 
 
-########GUI Part
+# GUI Part
+
+# Creating the main tkinter window
 
 root=ttkthemes.ThemedTk()
 root.get_themes()
@@ -89,19 +99,24 @@ root.geometry('940x735+200+10')
 root.resizable(0,0)
 root.overrideredirect(True)
 
+# Creating main frame
 mainframe=Frame(root,bd=4)
 mainframe.grid()
 
+# Creating title frame
 titleframe=Frame(mainframe,bg='orange')
 titleframe.grid()
 
+# Creating title label
 titleLabel=Label(titleframe,text='Master Typing',font=('algerian',28,'bold'),bg='goldenrod3',fg='white'
                  ,width=38,bd=10)
 titleLabel.grid(pady=5)
 
+# Creating paragraph frame
 paragraph_frame=Frame(mainframe)
 paragraph_frame.grid(row=1,column=0)
 
+# List of paragraphs for typing test
 paragraph_list=[' I failed the first quarter of a class in middle school, so I made a fake report card. I did this every quarter that year. I forgot that they mail home the end-of-year cards, and my mom got it before I could intercept with my fake. She was PISSED—at the school for their error. The teacher also retired that year and had already thrown out his records, so they had to take my mother’s “proof” (the fake ones I made throughout the year) and “correct” the “mistake.” ',
 
                     ' In my junior year of high school, this guy asked me on a date. He rented a Redbox movie and made a pizza. We were watching the movie and the oven beeped so the pizza was done. He looked me dead in the eye and said, “This is the worst part.” I then watched this boy open the oven and pull the pizza out with his bare hands, rack and all, screaming at the top of his lungs. We never had a second date.Ok so then what is i cannot tell you because that didnt happen.',
@@ -117,60 +132,73 @@ paragraph_list=[' I failed the first quarter of a class in middle school, so I m
                     'The Computer is an automatic device that performs mathematical calculations and logical operations. They are being put to use in widely divergent fields such as book-keeping, spaceflight controls, passanger reservation service, language translation etc. There are two categories: analog and digital. The former represents numbers by some physical quantity such as length, angular relation or electric current whereas the latter represent numbers by seperate devices for each digit.'
 ]
 
+# Shuffling paragraphs for randomness
 random.shuffle(paragraph_list)
 
+# Creating label for displaying paragraphs
 label_paragraph=Label(paragraph_frame,text=paragraph_list[0],wraplength=912,justify=LEFT,font=('arial',14,'bold'))
 label_paragraph.grid(row=0,column=0)
 
+# Creating textarea frame
 textarea_frame=Frame(mainframe)
 textarea_frame.grid(row=2,column=0)
 
+# Creating textarea for user input
 textarea=Text(textarea_frame,font=('arial',12,'bold'),width=100,height=7,bd=4,relief=GROOVE,wrap='word'
               ,state=DISABLED)
 textarea.grid()
 
+# Creating frame for displaying typing statistics
 frame_output=Frame(mainframe)
 frame_output.grid(row=3,column=0)
 
+# Labels for displaying various statistics
 elapsed_time_label=Label(frame_output,text='Elapsed Time',font=('Tahoma',12,'bold'),fg='red')
 elapsed_time_label.grid(row=0,column=0,padx=5)
 
 elapsed_timer_label=Label(frame_output,text='0',font=('Tahoma',12,'bold'))
 elapsed_timer_label.grid(row=0,column=1,padx=5)
 
+# Remaining time
 remaining_time_label=Label(frame_output,text='Remaining Time',font=('Tahoma',12,'bold'),fg='red')
 remaining_time_label.grid(row=0,column=2,padx=5)
 
 remaining_timer_label=Label(frame_output,text='60',font=('Tahoma',12,'bold'))
 remaining_timer_label.grid(row=0,column=3,padx=5)
 
+# Words per minute
 wpm_label=Label(frame_output,text='WPM',font=('Tahoma',12,'bold'),fg='red')
 wpm_label.grid(row=0,column=4,padx=5)
 
 wpm_count_label=Label(frame_output,text='0',font=('Tahoma',12,'bold'))
 wpm_count_label.grid(row=0,column=5,padx=5)
 
+# Total words
 totalwords_label=Label(frame_output,text='Total Words',font=('Tahoma',12,'bold'),fg='red')
 totalwords_label.grid(row=0,column=6,padx=5)
 
 totalwords_count_label=Label(frame_output,text='0',font=('Tahoma',12,'bold'))
 totalwords_count_label.grid(row=0,column=7,padx=5)
 
+# Wrong words
 wrongwords_label=Label(frame_output,text='Wrong Words',font=('Tahoma',12,'bold'),fg='red')
 wrongwords_label.grid(row=0,column=8,padx=5)
 
 wrongwords_count_label=Label(frame_output,text='0',font=('Tahoma',12,'bold'))
 wrongwords_count_label.grid(row=0,column=9,padx=5)
 
+# Accuracy
 accuracy_label=Label(frame_output,text='Accuracy',font=('Tahoma',12,'bold'),fg='red')
 accuracy_label.grid(row=0,column=10,padx=5)
 
 accuracy_percent_label=Label(frame_output,text='0',font=('Tahoma',12,'bold'))
 accuracy_percent_label.grid(row=0,column=11,padx=5)
 
+# Buttons frame
 buttons_Frame=Frame(mainframe)
 buttons_Frame.grid(row=4,column=0)
 
+# Start, Reset, and Exit buttons
 startButton=ttk.Button(buttons_Frame,text='Start',command=start)
 startButton.grid(row=0,column=0,padx=10)
 
@@ -180,12 +208,15 @@ resetButton.grid(row=0,column=1,padx=10)
 exitButton=ttk.Button(buttons_Frame,text='Exit',command=root.destroy)
 exitButton.grid(row=0,column=2,padx=10)
 
+# Keyboard frame
 keyboard_frame=Frame(mainframe)
 keyboard_frame.grid(row=5,column=0)
 
+# Frames for each row of the keyboard
 frame1to0=Frame(keyboard_frame)
 frame1to0.grid(row=0,column=0,pady=3)
 
+# Creating labels for numbers 1 to 0
 label1=Label(frame1to0,text='1',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
 label2=Label(frame1to0,text='2',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
 label3=Label(frame1to0,text='3',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
@@ -196,6 +227,7 @@ label7=Label(frame1to0,text='7',bg='black',fg='white',font=('arial',10,'bold'),w
 label8=Label(frame1to0,text='8',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
 label9=Label(frame1to0,text='9',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
 label0=Label(frame1to0,text='0',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
+
 
 label1.grid(row=0,column=0,padx=5)
 label2.grid(row=0,column=1,padx=5)
@@ -208,6 +240,7 @@ label8.grid(row=0,column=7,padx=5)
 label9.grid(row=0,column=8,padx=5)
 label0.grid(row=0,column=9,padx=5)
 
+# Creating labels for alphabets Q to P
 frameqtop=Frame(keyboard_frame)
 frameqtop.grid(row=1,column=0,pady=3)
 labelQ=Label(frameqtop,text='Q',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
@@ -232,6 +265,8 @@ labelI.grid(row=0,column=7,padx=5)
 labelO.grid(row=0,column=8,padx=5)
 labelP.grid(row=0,column=9,padx=5)
 
+
+# Creating labels for alphabets A to L
 frameatol=Frame(keyboard_frame)
 frameatol.grid(row=2,column=0,pady=3)
 labelA=Label(frameatol,text='A',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
@@ -254,6 +289,8 @@ labelJ.grid(row=0,column=6,padx=5)
 labelK.grid(row=0,column=7,padx=5)
 labelL.grid(row=0,column=8,padx=5)
 
+
+# Creating labels for alphabets Z to M
 frameztom=Frame(keyboard_frame)
 frameztom.grid(row=3,column=0,pady=3)
 labelZ=Label(frameztom,text='Z',bg='black',fg='white',font=('arial',10,'bold'),width=5,height=2,bd=10,relief=GROOVE)
@@ -275,13 +312,14 @@ labelM.grid(row=0,column=6,padx=5)
 spaceFrame=Frame(keyboard_frame)
 spaceFrame.grid(row=4,column=0,pady=3)
 
+# Creating space label
 labelSpace=Label(spaceFrame,bg='black',fg='white',font=('arial',10,'bold'),width=40,height=2,bd=10,relief=GROOVE)
 labelSpace.grid(row=0,column=0)
 
+# Function to change background color when a key is pressed
 def changeBG(widget):
     widget.config(bg='blue')
     widget.after(100,lambda :widget.config(bg='black'))
-
 
 label_numbers=[label1,label2,label3,label4,label5,label6,label7,label8,label9,label0]
 
@@ -290,6 +328,7 @@ label_alphabets=[labelA,labelB,labelC,labelD,labelE,labelF,labelG,labelH,labelI,
 
 space_label=[labelSpace]
 
+# Binding keys to change background color
 binding_numbers=['1','2','3','4','5','6','7','8','9','0']
 
 binding_capital_alphabets=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T',
@@ -310,4 +349,5 @@ for small_alphabets in range(len(binding_small_alphabets)):
 
 root.bind('<space>',lambda event:changeBG(space_label[0]))
 
+# Running the main loop
 root.mainloop()
