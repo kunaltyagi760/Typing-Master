@@ -1,4 +1,4 @@
-# Terminal-based Typing Master
+# The Typing Master
 
 ## Project Overview
 The Terminal-based Typing Master is a Python application designed to enhance users' typing skills through a dynamic and engaging interface. This project was undertaken as an individual effort, completed within a focused 5-day timeframe. The application provides real-time feedback, diverse practice scenarios, and a user-friendly experience for users aiming to improve their typing proficiency.
